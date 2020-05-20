@@ -2,6 +2,7 @@ const { admin, db } = require('../utils/admin');
 const firebase = require('firebase');
 const configFirebase = require('../utils/configFirebase');
 const { validateSignupData, validateLoginData, reduceUserDetails } = require('../utils/validators');
+const { ADMIN_EMAIL } = require('../utils/constants')
 
 firebase.initializeApp(configFirebase)
 
@@ -53,13 +54,19 @@ exports.signup = (req, res) => {
 
 exports.login = (req, res) => {
   const user = {
-    email: req.body.email,
+    email: req.body.username,
     password: req.body.password
   }
+
   const { errors, valid } = validateLoginData(user);
   if (!valid) {
     return res.status(400).json(errors);
   }
+
+  if (req.query.isAdmin && !ADMIN_EMAIL.includes(user.email)) {
+    return res.status(403).json({ error: 'invalid admin account'});
+  }
+
   firebase.auth().signInWithEmailAndPassword(user.email, user.password)
     .then(data => data.user.getIdToken())
     .then(token => res.status(200).json({ token }))

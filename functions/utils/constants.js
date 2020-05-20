@@ -1,0 +1,1 @@
+module.exports.ADMIN_EMAIL = ['phongnguyenhh.1996@gmail.com']

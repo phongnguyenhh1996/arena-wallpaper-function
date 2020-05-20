@@ -15,6 +15,8 @@ exports.getCategories = (req, res) => {
           imgUrl: doc.data().imgUrl,
         });
       });
+      res.set('Access-Control-Expose-Headers', "X-Total-Count")
+      res.set('X-Total-Count', categories.length.toString())
       return res.json(categories);
     })
     .catch(err => console.log(err))
@@ -27,7 +29,7 @@ exports.createCategory = (req, res) => {
     createdDate: new Date().toISOString(),
     viewCount: 0
   };
-  
+
   db
     .collection('categories')
     .add(newCategory)
