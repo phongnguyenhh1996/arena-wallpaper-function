@@ -8,6 +8,7 @@ const {
   login,
   getMe
 } = require('./handlers/user');
+const { getAllMedia, uploadMedia } = require('./handlers/media')
 const { getCategories, createCategory } = require('./handlers/categories')
 
 app.use(cors);
@@ -16,6 +17,10 @@ app.use(cors);
 app.post('/signup', signup);
 app.post('/login', login);
 app.get('/me', FBAuth, getMe);
+
+//media
+app.get('/media', getAllMedia)
+app.post('/upload', uploadMedia)
 
 // categories
 app.get('/categories', getCategories);
