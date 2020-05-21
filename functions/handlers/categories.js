@@ -12,7 +12,7 @@ exports.getCategories = (req, res) => {
           name: doc.data().name,
           viewCount: doc.data().viewCount,
           createdDate: doc.data().createdDate,
-          imgUrl: doc.data().imgUrl,
+          imageUrl: doc.data().imageUrl,
         });
       });
       res.set('Access-Control-Expose-Headers', "X-Total-Count")
@@ -24,7 +24,7 @@ exports.getCategories = (req, res) => {
 
 exports.createCategory = (req, res) => {
   const newCategory = {
-    imgUrl: 'https://firebasestorage.googleapis.com/v0/b/arenawallpaper.appspot.com/o/2518f411592ac4e60cd3baff711a5597.jpg?alt=media',
+    imageUrl: req.body.imageUrl,
     name: req.body.name,
     createdDate: new Date().toISOString(),
     viewCount: 0

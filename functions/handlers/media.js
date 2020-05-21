@@ -1,4 +1,5 @@
-const { db } = require('../utils/admin.js');
+const { db, admin } = require('../utils/admin.js');
+const configFirebase = require('../utils/configFirebase');
 
 exports.getAllMedia = (req, res) => {
   db

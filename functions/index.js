@@ -3,6 +3,7 @@ const cors = require('cors')({origin: true});
 const express = require('express');
 const app = express();
 const FBAuth = require('./utils/fbAuth');
+const isAdmin = require('./utils/isAdmin');
 const {
   signup,
   login,
@@ -19,11 +20,11 @@ app.post('/login', login);
 app.get('/me', FBAuth, getMe);
 
 //media
-app.get('/media', getAllMedia)
-app.post('/upload', uploadMedia)
+app.get('/media', FBAuth, isAdmin, getAllMedia)
+app.post('/media', FBAuth, isAdmin, uploadMedia)
 
 // categories
 app.get('/categories', getCategories);
-app.post('/categories', createCategory);
+app.post('/categories', FBAuth, isAdmin, createCategory);
 
 exports.api = functions.https.onRequest(app);
