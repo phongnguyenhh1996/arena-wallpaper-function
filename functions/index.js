@@ -11,6 +11,7 @@ const {
 } = require('./handlers/user');
 const { getAllMedia, uploadMedia } = require('./handlers/media')
 const { getCategories, createCategory } = require('./handlers/categories')
+const { getWallpapers, createWallpaper } = require('./handlers/wallpapers')
 
 app.use(cors);
 
@@ -26,5 +27,9 @@ app.post('/media', FBAuth, isAdmin, uploadMedia)
 // categories
 app.get('/categories', getCategories);
 app.post('/categories', FBAuth, isAdmin, createCategory);
+
+//wallpapers
+app.get('/wallpapers', getWallpapers);
+app.post('/wallpapers', FBAuth, isAdmin, createWallpaper);
 
 exports.api = functions.https.onRequest(app);
