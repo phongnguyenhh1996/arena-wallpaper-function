@@ -15,8 +15,10 @@ exports.getWallpapers = (req, res) => {
           useCount: doc.data().useCount,
           createdAt: doc.data().createdDate,
           image: doc.data().image,
+          imageId: doc.data().imageId,
           hero: doc.data().hero,
-          category: doc.data().category
+          category: doc.data().category,
+          categoryId: doc.data().categoryId
         });
       });
       res.set('Access-Control-Expose-Headers', "X-Total-Count")
@@ -29,6 +31,7 @@ exports.getWallpapers = (req, res) => {
 exports.createWallpaper = (req, res) => {
   const newWallpaper = {
     image: req.body.image,
+    imageId: req.body.image.id,
     name: req.body.name,
     description: req.body.description,
     createdDate: new Date().toISOString(),
@@ -42,13 +45,10 @@ exports.createWallpaper = (req, res) => {
     .then(doc => {
       if (doc.exists) {
         newWallpaper.category = doc.data()
-        console.log(newWallpaper);
-        
         return db.collection('wallpapers').add(newWallpaper)
       }
     })
     .then((doc) => {
-      console.log(doc)
       const resWallpaper = newWallpaper;
       resWallpaper.id = doc.id;
       return res.json(resWallpaper);

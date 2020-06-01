@@ -13,6 +13,7 @@ exports.getCategories = (req, res) => {
           viewCount: doc.data().viewCount,
           createdAt: doc.data().createdAt,
           image: doc.data().image,
+          imageId: doc.data().imageId
         });
       });
       res.set('Access-Control-Expose-Headers', "X-Total-Count")
@@ -25,6 +26,7 @@ exports.getCategories = (req, res) => {
 exports.createCategory = (req, res) => {
   const newCategory = {
     image: req.body.image,
+    imageId: req.body.image.id,
     name: req.body.name,
     createdAt: new Date().toISOString(),
     viewCount: 0
